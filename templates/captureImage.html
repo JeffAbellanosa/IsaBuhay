@@ -164,21 +164,22 @@ https://templatemo.com/tm-570-chain-app-dev
       }
     }, 3000)
 
+    function preventBack() {
+        window.history.forward(); 
+    }
+      
+    setTimeout("preventBack()", 0);
+      
+    window.onunload = function () { null };
+
     var isSubmitting = false
-    var hasValues = false
     $(document).ready(function () {
         $('#msform').submit(function(){
             isSubmitting = true
         })
 
-        $('#msform input').each(function(){
-            if( $(this).val() ) {
-              hasValues = true
-            }
-        });
-
         $(window).on('beforeunload', function() {
-            if (!isSubmitting &&  hasValues){
+            if (!isSubmitting &&  $('#webimg')[0].files.length !== 0){
                 return 'You have unsaved changes which will not be saved.'
             }
         });

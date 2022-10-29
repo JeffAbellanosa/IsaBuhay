@@ -241,7 +241,7 @@ https://templatemo.com/tm-570-chain-app-dev
                   </tr>
                 </table>
                 <input type="button" value="Cancel" onclick="redirectBack()" name="previous" class="action-button-previous">
-                <input type="submit" class="action-button"  value="Update"/>
+                <input type="submit" class="action-button"  onclick="submitButtonClick(event)" value="Update"/>
             </fieldset>
           </form>
         </div>
@@ -282,14 +282,23 @@ https://templatemo.com/tm-570-chain-app-dev
       window.location.href = "{% url 'DisplayCBCTestResult' object.pk %}"
     }
 
+    
+    function submitButtonClick(event) {
+          if($('#msform').serialize() == $('#msform').data('initial-state')){
+            event.preventDefault();
+            alert("no changes");
+          }
+        } 
+
     var isSubmitting = false
 
     $(document).ready(function () {
-        $('#msform').submit(function(){
+      
+      $('#msform').data('initial-state', $('#msform').serialize());
+      
+        $('#msform').submit(function(evt){
             isSubmitting = true
         })
-
-        $('#msform').data('initial-state', $('#msform').serialize());
 
         $(window).on('beforeunload', function() {
             if (!isSubmitting && $('#msform').serialize() != $('#msform').data('initial-state')){
